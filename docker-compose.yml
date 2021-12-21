@@ -1,0 +1,43 @@
+version: "3.2"
+
+services:
+# не забыть добавить нетворк
+#  api:
+#    build:
+#      context: .
+#      dockerfile: Api/Dockerfile
+#    depends_on:
+#      - mongodb
+#      - rabbitmq
+#  worker:
+#    build:
+#      context: .
+#      dockerfile: BusDaemon/Dockerfile
+#    depends_on:
+#      - api
+#      - mongodb
+#      - rabbitmq
+  mongodb:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: test
+      MONGO_INITDB_ROOT_PASSWORD: test
+    volumes:
+      - $PWD/dev-tools/mongodb/data:/db
+    ports:
+      - "27017:27017"
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    volumes:
+      - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
+      - ./.docker/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/
+    environment:
+      RABBITMQ_DEFAULT_USER: "test"
+      RABBITMQ_DEFAULT_PASS: "test"
+    hostname: "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  
