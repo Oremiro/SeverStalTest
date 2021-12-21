@@ -399,3 +399,4 @@ FodyWeavers.xsd
 
 .docker
 /dev-tools/
+.idea
